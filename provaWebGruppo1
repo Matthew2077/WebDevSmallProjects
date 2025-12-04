@@ -1,0 +1,241 @@
+<html>
+    <head>
+        <style>
+            #title {
+                text-align: center;
+                font-family: Arial, sans-serif;
+            }
+            #game-container {
+                display: grid;
+                grid-template-columns: repeat(5, 1fr);
+                grid-template-rows: repeat(5, 1fr);
+                gap: 10px;
+            }
+
+            #game-container button {
+                padding: 15px;
+                font-size: 16px;
+                font-family: Arial, sans-serif;
+                background: #f0f0f0;
+                border-radius: 20px;
+                border: 1px solid black;
+            }
+
+            #game-container button:hover {
+                background-color : blue;
+            }
+
+            #game-container button:active {
+                background-color : rgb(12, 12, 199);
+            }
+
+            #game-info {
+                text-align: center;
+                margin-top: 20px;
+                font-family: Arial, sans-serif;
+            }
+
+            #message {
+                /*font-size: 1.2rem;*/
+                font-weight: bold;
+                margin-top: 10px;     
+                color: black;
+            }
+
+            /* #startGame {
+                display: flex;
+                flex-direction: column;
+                align-items: center; 
+            } */
+
+            #timer-container {
+                display: inline-flex;    /* Mantiene timer e testo sulla stessa linea */
+                gap: 5px;                /* Spazio tra i due span */
+                /* font-size: 1.1rem; */
+                background: #f0f0f0;     /* Leggera evidenziazione */
+                padding: 8px 12px;
+            }
+
+            #timer {
+                font-weight: bold;
+                color: #d9534f;
+            }
+
+        </style>
+
+    </head>
+    <body>
+        <h1 id="title">Gioco del Percorso Segreto</h1>
+
+
+        <div id="game-container">
+            
+        </div>
+        
+        <div id="game-info">
+            <p id="message"></p>
+            <!-- <button id="startGame">Inizia a giocare</button> -->
+            <div id="timer-container">
+                <span>Tempo rimanente: </span><span id="timer"></span>
+            </div>
+            
+        </div>
+        
+
+
+
+        <script>
+            //Funzione per gestire il messaggio di gioco 
+            const message = document.getElementById('message');
+
+            function EditMessage(stato){
+                console.log('Stato Gioco (EditMessage) ' + stato)
+                if (stato = 1) {
+                    //Stato di default, prima di iniziare a giocare
+                    message.innerHTML = 'Clicca su un bottone qualsiasi per iniziare';
+
+                } else if (stato = 2) {
+                    //stato di gioco, l'utente ha cliccato la casella giusta. 
+                    message.innerHTML = "Stai andanto alla grande! Clicca un'altra casella";
+                } else if (stato = 3) {
+                    // Se l'utente sbaglia
+                    message.innerHTML = "Ops! Hai cliccato un bottone sbagliato";
+                } else if (stato = 0) {
+                    //troppi errori, riprova
+                    message.innerHTML = "Hai sbagliato troppe volte! Ricomincia";
+                } else if (stato = 4) {
+                    message.innerHTML = "Hai vinto! Complimenti";
+                }
+            }
+
+
+
+            //Funzione per gestire il Timer
+            const timer = document.getElementById("timer")
+
+            function StartTimer(tempo) {
+
+                const id = setInterval(() => {
+                    timer.innerHTML = (tempo + ' secondi');
+                    //console.log("Tempo rimanente: " + tempo);
+
+                    tempo--;
+
+                    if (tempo < 0) {
+                        clearInterval(id);
+                        timer.innerHTML = "Finito!";
+                    }
+                }, 1000); // 1 secondo
+            }
+
+
+
+            //Funzione per creare gioco:
+            
+            class Grid {
+                constructor(Ncaselle){
+                    this.Ncaselle = Ncaselle;
+                    this.container = document.getElementById("game-container")
+                    //this.step = step;
+
+                }
+
+                create(){
+                    //Crea bottoni
+                    //console.log("value: ");
+                    for(let i = 0; i < this.Ncaselle; i++){
+                        const btn = document.createElement("button");
+                        btn.innerHTML = i;
+                        btn.value = i;
+                        //console.log("value: "+ i);
+
+                        this.container.appendChild(btn);
+
+                        btn.addEventListener("click", (event) => {
+                            this.onButtonClick(event);   // metodo definito nella classe
+                        });
+                    }
+                }
+
+                pathCreation(){
+                    //Definisce qual'è la lista di mosse giuste da fare. 
+                    // ho un numero massimo di Caselle da creare
+                    // un array da creare con numeri casuali dentro a quel massimo
+                    
+                    let path = [];
+                    for (let i = 0; i < this.Ncaselle; i++){
+                        //Numero Random non oltre il numero di caselle
+                        let Number1 = Math.floor(Math.random() * this.Ncaselle);
+                        //console.log("Numero: " + Number1)
+                        
+                        //Aggiungi elemento all'array
+                        path.push(Number1)
+                        //console.log("path " + path);
+
+    
+                    } 
+          
+                     return path;
+                }
+
+                onButtonClick(event){
+                    const clickedValue = Number(event.target.value); // ?? 
+
+                    // Valore corretto che ci aspettiamo
+                    const correctValue = this.path[this.step];
+
+                    if (clickedValue === correctValue) {
+                        // ✔️ MOSSA GIUSTA
+                        event.target.style.background = "green";
+                        EditMessage(2); // “stai andando alla grande”
+                        this.step++;    // Vai alla mossa successiva
+                    } else {
+                        // ❌ MOSSA SBAGLIATA
+                        event.target.style.background = "red";
+                        EditMessage(3); // “Ops!”
+                    }
+
+                    // Condizione di vittoria
+                    if (this.step >= this.path.length) {
+                        EditMessage(4);
+                    }
+                }
+            }
+
+            //Funzione per Gestire il gioco
+            function GameEngine(Ncaselle, tempo) {
+                // Creazione Griglia
+                let Griglia = new Grid(Ncaselle);
+                Griglia.create(); 
+
+                // Path to win:
+                let pathtoWin = Griglia.pathCreation();
+                Griglia.path = pathtoWin; // <─ importante
+                Griglia.step = 0;         // <─ inizia dal primo
+
+                console.log("Percorso da seguire:", pathtoWin);
+
+                // Inizia timer appena la pagina si carica
+                StartTimer(tempo);
+
+                // Messaggio iniziale
+                EditMessage(1);
+            }   
+
+            GameEngine(50, 100); //Avvio gioco
+                  
+
+         
+            /*TODO list:
+            - Intercettare il click dell'utente;
+            - quando c'è un click, verifica se il button value corrisponde 
+            alla mossa che dovrebbe essere (vedi l'array pathtoWin);
+            - se ha fatto bene ok, altrimenti deve mettere rosso o qualche azione ...           
+            
+            */
+            
+
+            
+        </script>
+    </body>
+</html>
