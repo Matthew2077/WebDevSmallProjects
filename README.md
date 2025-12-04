@@ -15,7 +15,7 @@ Durata della prova: 2.5 ore
 
 #### 1. Struttura HTML di base
 
-- Creare un file HTML con un titolo "<h1>" che descriva il gioco ("Gioco del Percorso Segreto").
+- Creare un file HTML con un titolo tag h1 che descriva il gioco ("Gioco del Percorso Segreto").
 - Creare una griglia di caselle (ad esempio, 5x5) all'interno di un contenitore <div> con id="game-container".
 - Creare un elemento <p> con id="message" per visualizzare messaggi e stato del gioco.
 
