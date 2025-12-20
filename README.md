@@ -42,3 +42,33 @@ Mostrare il tempo rimanente durante il gioco (es. "Tempo rimasto: X secondi") e 
 Aumentare la difficoltà generando un percorso segreto più lungo a rimuovendo indizi visivi dopo un certo numero di clic.
 
 3. Feedback Visivo
+
+## TaskManager | 20.12.2025:
+
+### Lista tasks:
+#### User:
+- Aggiungere attività
+- Visualizzare attività
+- filtrare attività (tutti, completati, da fare);
+- completare tasks
+- eliminare tasks
+. modificare task
+#### Persistenza:
+- Salva nel browser
+#### Struttura dati:
+- ID;
+- title
+- completed (bool)
+- CreatedAT
+#### Controlli:
+- verifica aggiunta task, non vuote
+
+### Progettazione:
+Abbiamo una struttura HTML che comprense: titolo, container per aggiungere la task (data, titolo), container task (con tutte le task), sezione strumenti per cambiare visualizzazione.
+
+Ogni task dovrà avere 3 bottoni:
+- Modifica;
+- Elimina;
+- Completato.
+
+Ognuna di questi aspetti ha una sua funzione dedicata
