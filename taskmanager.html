@@ -2,7 +2,7 @@
     <head>
         <style>
             body {
-                background-color: rgb(0, 92, 0);
+                background-color: rgb(4, 163, 4);
             }
             #title-container {
                 border: red solid 1px;
@@ -40,9 +40,20 @@
 
         <div id="input-container">
             <h3>Crea nuova task: </h3>
-            <input id="task-title" type="text">
-            <input id="task-date" type="date">
-            <button id="btm-create" class="btn-general" onclick="AddTask()">Crea task</button>
+            <!-- <form> -->
+                <input id="task-title" type="text">
+                <label for="priority">Priorità: </label>
+                <!-- <select name="priority">
+                    <option value="Massima">Massima</option>
+                    <option value="Media">Media</option>
+                    <option value="Bassa">Bassa</option>
+                
+
+                </select> -->
+                <input id="task-date" type="date">
+                <button id="btm-create" class="btn-general" onclick="AddTask()">Crea task</button>
+            <!-- </form> -->
+
         </div>
         <div id="task-container">
             <h3>Lista Tasks:</h3>
@@ -60,9 +71,9 @@
         </div>
     </body>
     <script>
-        //JAVASCRIPT MY AMORRR
+        //---JAVASCRIPT MY AMORRR---//
 
-        //Catturare input utente:
+        //----------------Catturare input utente-------------------
         //prende task-title, task-date, btm-create
         function GetInput (){
             const TaskTitle = document.getElementById('task-title');
@@ -77,12 +88,12 @@
 
             return TaskInfo;
         }
-        //Gestisci modifica
+        //-------------Gestisci modifica--------------
         function EditTask(){
             console.log('EDIT TASK! HELLO WORLD!')
         }
 
-        //Gestisci Eliminazione
+        //-------------Gestisci Eliminazione-----------
         function DelTask(){
             console.log('DELETE TASK! HELLO WORLD!')
         }
@@ -92,22 +103,82 @@
         }
 
 
-        //Aggiungi Task:
+        //---------------Gestisci bottoni---------------
+        function createButtons(){
+            //qui aggiungo i bottoni di ELIMINA, completa e EDIT
+            console.log('Create buttons non fatto YET')
+
+
+        }
+
+        //---------------Aggiungi Task---------------
         // Aggiungi elementi <li> a task-list. 
         function AddTask() {
-            const TaskContainer = document.getElementById('task-container');
+            //PRENDI LE INFO NECESSARIE:
             let input = GetInput();
             let TaskTitle = input[0];
             let TaskDate = input[1];
-            console.log(TaskTitle); //debug
 
-            let NewTask = '<li>' + TaskTitle + ' | Data di scadenza: ' + TaskDate + '<button onclick="EditTask()">Modifica</button><button onclick="DelTask()">Elimina</button><button onclick="CompleteTask()">Completato</button></li>';
             
-            TaskContainer.appendChild(NewTask);
-            console.log(NewTask);
+            
+
+            const TaskList = document.getElementById('task-list');
+            const li = TaskList
+            //.appendChild(document.createElement("ul"))
+            .appendChild(document.createElement("li"));
+            li.textContent = TaskTitle + ' | Scadenza: ' + TaskDate;
+            //  li.createElement('p');
+
+            document.TaskList.appendChild(li);
+
+
+            createButtons(); //CREA ELEMENTI HTML
+            //Debug
+            //console.log(NewTask);
 
         }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        /*
+                    //Aggiungi task:
+            let li = document.createElement("li"); //Variabile che contiene la creazione del "li"
+            TaskList.appendChild(li); //la uso qui per appenderla al <ul>
+            
+              let BtnEditTask = document.createElement('button');
+            let BtnDelTask = document.createElement('button');
+            let BtnCompleteTask = document.createElement('button');
+
+            BtnEditTask.setAttribute('onclick', 'EditTask()');
+            BtnEditTask.textContent('ciao')
+            BtnDelTask.setAttribute('onclick', 'DelTask()');
+            BtnCompleteTask.setAttribute('onclick', 'CompleteTask()');
+
+            li.appendChild(BtnEditTask)
+
+            li.textContent = TaskTitle + ' | Data di scadenza: ' + TaskDate; //aggiungi il testo
+
+            */
     </script>
 </html>
