@@ -1,7 +1,7 @@
 # WebDevSmallProjects
 A collection of small sities of all kind. 
 
-## Test ITS 2024 | provaWebGruppo1:
+## Test ITS 2024 | SecretWalkGame:
 
 Prova Teorico pratica web gruppo 1: Gioco del Percorso Segreto
 
