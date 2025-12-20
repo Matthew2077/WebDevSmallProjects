@@ -1,4 +1,4 @@
-<html>
+<!DOCTYPE html>
     <head>
         <style>
             body {
@@ -42,17 +42,12 @@
             <h3>Crea nuova task: </h3>
             <input id="task-title" type="text">
             <input id="task-date" type="date">
-            <button id="btm-create" class="btn-general">Crea task</button>
+            <button id="btm-create" class="btn-general" onclick="AddTask()">Crea task</button>
         </div>
         <div id="task-container">
             <h3>Lista Tasks:</h3>
             <ul id="task-list">
-                <li>
-                    Fai test con JS; <button>Modifica</button><button>Elimina</button><button>Completato</button>
-                </li>
-                <li>
-                    Carica tutto su GitHub  <button>Modifica</button><button>Elimina</button><button>Completato</button>
-                </li>
+
             </ul>
 
         </div>
@@ -69,16 +64,50 @@
 
         //Catturare input utente:
         //prende task-title, task-date, btm-create
+        function GetInput (){
+            const TaskTitle = document.getElementById('task-title');
+            const TaskDate = document.getElementById('task-date');
+            let TaskTitleVal = TaskTitle.value;
+            let TaskDateVal = TaskDate.value;
+
+            TaskInfo = [TaskTitleVal, TaskDateVal]; //array per return
+
+            //debug
+            console.log('Return:' + TaskInfo);
+
+            return TaskInfo;
+        }
+        //Gestisci modifica
+        function EditTask(){
+            console.log('EDIT TASK! HELLO WORLD!')
+        }
+
+        //Gestisci Eliminazione
+        function DelTask(){
+            console.log('DELETE TASK! HELLO WORLD!')
+        }
+        //Gestisci "completato"
+        function CompleteTask(){
+            console.log('Task completata! HELLO WORLD!')
+        }
+
 
         //Aggiungi Task:
         // Aggiungi elementi <li> a task-list. 
-        
+        function AddTask() {
+            const TaskContainer = document.getElementById('task-container');
+            let input = GetInput();
+            let TaskTitle = input[0];
+            let TaskDate = input[1];
+            console.log(TaskTitle); //debug
 
-        //Gestisci modifica
+            let NewTask = '<li>' + TaskTitle + ' | Data di scadenza: ' + TaskDate + '<button onclick="EditTask()">Modifica</button><button onclick="DelTask()">Elimina</button><button onclick="CompleteTask()">Completato</button></li>';
+            
+            TaskContainer.appendChild(NewTask);
+            console.log(NewTask);
+
+        }
 
 
-        //Gestisci Eliminazione
-
-        //Gestisci "completato"
     </script>
 </html>
